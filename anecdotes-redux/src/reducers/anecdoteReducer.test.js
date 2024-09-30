@@ -15,9 +15,9 @@ describe("anecdoteReducer", () => {
     },
   ];
 
-  test('returns new state with action "VOTE_ANECDOTE"', () => {
+  test('returns new state with action "INCREMENT_VOTE"', () => {
     const action = {
-      type: "VOTE_ANECDOTE",
+      type: "INCREMENT_VOTE",
       payload: {
         id: 2,
       },
@@ -34,5 +34,24 @@ describe("anecdoteReducer", () => {
       id: 2,
       votes: 1,
     });
+  });
+
+  test('returns new state with action "NEW_ANECDOTE"', () => {
+    const action = {
+      type: "NEW_ANECDOTE",
+      payload: {
+        content: "Testing the new anecdote action",
+        id: 3,
+        votes: 0,
+      },
+    };
+
+    const state = initialState;
+    deepFreeze(state);
+
+    const newState = anecdoteReducer(state, action);
+
+    expect(newState).toHaveLength(3);
+    expect(newState).toContainEqual(action.payload);
   });
 });

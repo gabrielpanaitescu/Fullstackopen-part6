@@ -26,7 +26,7 @@ const anecdoteReducer = (state = initialState, action) => {
   console.log("action", action);
 
   switch (action.type) {
-    case "VOTE_ANECDOTE": {
+    case "INCREMENT_VOTE": {
       const id = action.payload.id;
       const anecdoteToChange = state.find((anecdote) => anecdote.id === id);
       const changedAnecdote = {
@@ -37,6 +37,8 @@ const anecdoteReducer = (state = initialState, action) => {
         anecdote.id === id ? changedAnecdote : anecdote
       );
     }
+    case "NEW_ANECDOTE":
+      return state.concat(action.payload);
     default:
       return state;
   }
@@ -44,9 +46,20 @@ const anecdoteReducer = (state = initialState, action) => {
 
 export const voteAnecdote = (id) => {
   return {
-    type: "VOTE_ANECDOTE",
+    type: "INCREMENT_VOTE",
     payload: {
       id,
+    },
+  };
+};
+
+export const createAnecdote = (content) => {
+  return {
+    type: "NEW_ANECDOTE",
+    payload: {
+      content,
+      id: getId(),
+      votes: 0,
     },
   };
 };
