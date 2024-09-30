@@ -1,1 +1,1 @@
-React Vite + Redux project
+Advanced State Management
