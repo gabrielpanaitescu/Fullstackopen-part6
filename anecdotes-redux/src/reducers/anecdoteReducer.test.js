@@ -17,10 +17,8 @@ describe("anecdoteReducer", () => {
 
   test('returns new state with action "INCREMENT_VOTE"', () => {
     const action = {
-      type: "INCREMENT_VOTE",
-      payload: {
-        id: 2,
-      },
+      type: "anecdotes/voteAnecdote",
+      payload: 2,
     };
 
     const state = initialState;
@@ -38,12 +36,8 @@ describe("anecdoteReducer", () => {
 
   test('returns new state with action "NEW_ANECDOTE"', () => {
     const action = {
-      type: "NEW_ANECDOTE",
-      payload: {
-        content: "Testing the new anecdote action",
-        id: 3,
-        votes: 0,
-      },
+      type: "anecdotes/createAnecdote",
+      payload: "Testing the new anecdote action",
     };
 
     const state = initialState;
@@ -52,6 +46,8 @@ describe("anecdoteReducer", () => {
     const newState = anecdoteReducer(state, action);
 
     expect(newState).toHaveLength(3);
-    expect(newState).toContainEqual(action.payload);
+    expect(newState.map((anecdote) => anecdote.content)).toContainEqual(
+      action.payload
+    );
   });
 });
