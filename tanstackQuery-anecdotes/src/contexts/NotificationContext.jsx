@@ -17,7 +17,7 @@ const notificationReducer = (state, action) => {
 export const useNotificationDispatch = () => {
   const { notificationDispatch } = useContext(NotificationContext);
 
-  const setNotification = (message, seconds = 3) => {
+  const setNotification = (message, seconds = 5) => {
     notificationDispatch({ type: "set_notification", payload: message });
 
     setTimeout(() => {

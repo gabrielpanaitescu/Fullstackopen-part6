@@ -27,7 +27,7 @@ const App = () => {
     };
 
     updateAnecdoteMutation.mutate(updatedAnecdote);
-    setNotification(`anecdote "${anecdote.content}" voted`, 3);
+    setNotification(`anecdote "${anecdote.content}" voted`, 5);
   };
 
   if (isPending) return <div>loading...</div>;
