@@ -2,8 +2,10 @@ import AnecdoteForm from "./components/AnecdoteForm";
 import Notification from "./components/Notification";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getAnecdotes, updateAnecdote } from "./services/anecdotesRequests";
+import { useNotificationDispatch } from "./contexts/NotificationContext";
 
 const App = () => {
+  const setNotification = useNotificationDispatch();
   const queryClient = useQueryClient();
 
   const { data, isError, isPending, error } = useQuery({
@@ -25,6 +27,7 @@ const App = () => {
     };
 
     updateAnecdoteMutation.mutate(updatedAnecdote);
+    setNotification(`anecdote "${anecdote.content}" voted`, 3);
   };
 
   if (isPending) return <div>loading...</div>;
@@ -35,7 +38,6 @@ const App = () => {
   }
 
   const anecdotes = data;
-  console.log(anecdotes);
 
   return (
     <div>
