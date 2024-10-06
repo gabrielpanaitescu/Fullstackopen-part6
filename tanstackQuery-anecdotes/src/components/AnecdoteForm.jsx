@@ -13,6 +13,14 @@ const AnecdoteForm = () => {
     onSuccess(newAnecdote) {
       const anecdotes = queryClient.getQueryData(["anecdotes"]);
       queryClient.setQueryData(["anecdotes"], anecdotes.concat(newAnecdote));
+      setNotification(`added anecdote "${newAnecdote.content}"`, 5);
+    },
+    onError(error) {
+      if (
+        error.response.data.error ===
+        "too short anecdote, must have length 5 or more"
+      )
+        setNotification(`anecdote must be at least 5 chars long"`, 5);
     },
   });
 
@@ -21,16 +29,19 @@ const AnecdoteForm = () => {
     const content = event.target.anecdote.value;
     event.target.anecdote.value = "";
     newAnecdoteMutation.mutate({ content, votes: 0 });
-    setNotification(`added anecdote "${content}"`, 5);
   };
 
   return (
     <div>
       <h3>create new</h3>
-      <form onSubmit={onCreate}>
-        <input name="anecdote" />
-        <button type="submit">create</button>
-      </form>
+      {newAnecdoteMutation.isPending ? (
+        <p>creating anecdote...</p>
+      ) : (
+        <form onSubmit={onCreate}>
+          <input name="anecdote" />
+          <button type="submit">create</button>
+        </form>
+      )}
     </div>
   );
 };
